@@ -19,7 +19,6 @@ namespace SerialCommunication
         }
 
         SerialPort serialPort = new SerialPort();
-        private long SendCount = 0;
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -41,9 +40,8 @@ namespace SerialCommunication
             {
                 Encoding encoding = Encoding.GetEncoding("GB2312");
                 byte[] bytes = encoding.GetBytes(dataSend.Text);
-                SendCount += (long)bytes.Length;
                 serialPort.Write(bytes, 0, bytes.Length);
-                dataRecv.Text += "发：" + Encoding.Default.GetString(bytes) + "\r\n";
+                dataRecv.Text += DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + " Send-" + Encoding.Default.GetString(bytes) + "\r\n";
             }
             catch
             {
@@ -84,7 +82,7 @@ namespace SerialCommunication
                 {
                     if (str != "")
                     {
-                        dataRecv.Text += "收：" + str + "\r\n";
+                        dataRecv.Text += DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + " Recv-" + str + "\r\n";
                     }
                 }
                 catch
