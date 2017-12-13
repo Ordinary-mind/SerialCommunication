@@ -1,6 +1,6 @@
 ﻿namespace SerialCommunication
 {
-    partial class Form1
+    partial class SerialPortForm
     {
         /// <summary>
         /// 必需的设计器变量。
@@ -28,59 +28,58 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.portList = new System.Windows.Forms.ComboBox();
-            this.dataSend = new System.Windows.Forms.TextBox();
-            this.dataRecv = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.openPort = new System.Windows.Forms.Button();
+            this.txt_portList = new System.Windows.Forms.ComboBox();
+            this.txt_dataSend = new System.Windows.Forms.TextBox();
+            this.txt_dataRecv = new System.Windows.Forms.TextBox();
+            this.lb_portList = new System.Windows.Forms.Label();
+            this.btn_openPort = new System.Windows.Forms.Button();
             this.btn_sendData = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.timer = new System.Windows.Forms.Timer(this.components);
+            this.la_dataSend = new System.Windows.Forms.Label();
+            this.lb_dataRecv = new System.Windows.Forms.Label();
+            this.btn_clearBuffer = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // portList
+            // txt_portList
             // 
-            this.portList.FormattingEnabled = true;
-            this.portList.Location = new System.Drawing.Point(84, 27);
-            this.portList.Name = "portList";
-            this.portList.Size = new System.Drawing.Size(128, 20);
-            this.portList.TabIndex = 0;
+            this.txt_portList.FormattingEnabled = true;
+            this.txt_portList.Location = new System.Drawing.Point(84, 27);
+            this.txt_portList.Name = "txt_portList";
+            this.txt_portList.Size = new System.Drawing.Size(128, 20);
+            this.txt_portList.TabIndex = 0;
             // 
-            // dataSend
+            // txt_dataSend
             // 
-            this.dataSend.Location = new System.Drawing.Point(84, 69);
-            this.dataSend.Name = "dataSend";
-            this.dataSend.Size = new System.Drawing.Size(175, 21);
-            this.dataSend.TabIndex = 1;
+            this.txt_dataSend.Location = new System.Drawing.Point(84, 69);
+            this.txt_dataSend.Name = "txt_dataSend";
+            this.txt_dataSend.Size = new System.Drawing.Size(175, 21);
+            this.txt_dataSend.TabIndex = 1;
             // 
-            // dataRecv
+            // txt_dataRecv
             // 
-            this.dataRecv.Location = new System.Drawing.Point(84, 109);
-            this.dataRecv.Multiline = true;
-            this.dataRecv.Name = "dataRecv";
-            this.dataRecv.Size = new System.Drawing.Size(256, 131);
-            this.dataRecv.TabIndex = 2;
+            this.txt_dataRecv.Location = new System.Drawing.Point(84, 109);
+            this.txt_dataRecv.Multiline = true;
+            this.txt_dataRecv.Name = "txt_dataRecv";
+            this.txt_dataRecv.Size = new System.Drawing.Size(256, 131);
+            this.txt_dataRecv.TabIndex = 2;
             // 
-            // label1
+            // lb_portList
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(21, 30);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 12);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "串口列表";
+            this.lb_portList.AutoSize = true;
+            this.lb_portList.Location = new System.Drawing.Point(21, 30);
+            this.lb_portList.Name = "lb_portList";
+            this.lb_portList.Size = new System.Drawing.Size(53, 12);
+            this.lb_portList.TabIndex = 3;
+            this.lb_portList.Text = "串口列表";
             // 
-            // openPort
+            // btn_openPort
             // 
-            this.openPort.Location = new System.Drawing.Point(227, 25);
-            this.openPort.Name = "openPort";
-            this.openPort.Size = new System.Drawing.Size(75, 23);
-            this.openPort.TabIndex = 4;
-            this.openPort.Text = "打开";
-            this.openPort.UseVisualStyleBackColor = true;
-            this.openPort.Click += new System.EventHandler(this.openPort_Click);
+            this.btn_openPort.Location = new System.Drawing.Point(227, 25);
+            this.btn_openPort.Name = "btn_openPort";
+            this.btn_openPort.Size = new System.Drawing.Size(75, 23);
+            this.btn_openPort.TabIndex = 4;
+            this.btn_openPort.Text = "打开";
+            this.btn_openPort.UseVisualStyleBackColor = true;
+            this.btn_openPort.Click += new System.EventHandler(this.openPort_Click);
             // 
             // btn_sendData
             // 
@@ -92,39 +91,50 @@
             this.btn_sendData.UseVisualStyleBackColor = true;
             this.btn_sendData.Click += new System.EventHandler(this.btn_sendData_Click);
             // 
-            // label2
+            // la_dataSend
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(23, 78);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(53, 12);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "发送指令";
+            this.la_dataSend.AutoSize = true;
+            this.la_dataSend.Location = new System.Drawing.Point(23, 78);
+            this.la_dataSend.Name = "la_dataSend";
+            this.la_dataSend.Size = new System.Drawing.Size(53, 12);
+            this.la_dataSend.TabIndex = 6;
+            this.la_dataSend.Text = "发送指令";
             // 
-            // label3
+            // lb_dataRecv
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(23, 128);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(53, 12);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "收发记录";
+            this.lb_dataRecv.AutoSize = true;
+            this.lb_dataRecv.Location = new System.Drawing.Point(23, 128);
+            this.lb_dataRecv.Name = "lb_dataRecv";
+            this.lb_dataRecv.Size = new System.Drawing.Size(53, 12);
+            this.lb_dataRecv.TabIndex = 7;
+            this.lb_dataRecv.Text = "收发记录";
             // 
-            // Form1
+            // btn_clearBuffer
+            // 
+            this.btn_clearBuffer.Location = new System.Drawing.Point(248, 249);
+            this.btn_clearBuffer.Name = "btn_clearBuffer";
+            this.btn_clearBuffer.Size = new System.Drawing.Size(92, 23);
+            this.btn_clearBuffer.TabIndex = 8;
+            this.btn_clearBuffer.Text = "清空收发记录";
+            this.btn_clearBuffer.UseVisualStyleBackColor = true;
+            this.btn_clearBuffer.Click += new System.EventHandler(this.btn_clearBuffer_Click);
+            // 
+            // SerialPortForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(365, 261);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
+            this.ClientSize = new System.Drawing.Size(365, 297);
+            this.Controls.Add(this.btn_clearBuffer);
+            this.Controls.Add(this.lb_dataRecv);
+            this.Controls.Add(this.la_dataSend);
             this.Controls.Add(this.btn_sendData);
-            this.Controls.Add(this.openPort);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.dataRecv);
-            this.Controls.Add(this.dataSend);
-            this.Controls.Add(this.portList);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Controls.Add(this.btn_openPort);
+            this.Controls.Add(this.lb_portList);
+            this.Controls.Add(this.txt_dataRecv);
+            this.Controls.Add(this.txt_dataSend);
+            this.Controls.Add(this.txt_portList);
+            this.Name = "SerialPortForm";
+            this.Text = "串口通信模拟";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
@@ -134,15 +144,15 @@
 
         #endregion
 
-        private System.Windows.Forms.ComboBox portList;
-        private System.Windows.Forms.TextBox dataSend;
-        private System.Windows.Forms.TextBox dataRecv;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button openPort;
+        private System.Windows.Forms.ComboBox txt_portList;
+        private System.Windows.Forms.TextBox txt_dataSend;
+        private System.Windows.Forms.TextBox txt_dataRecv;
+        private System.Windows.Forms.Label lb_portList;
+        private System.Windows.Forms.Button btn_openPort;
         private System.Windows.Forms.Button btn_sendData;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Timer timer;
+        private System.Windows.Forms.Label la_dataSend;
+        private System.Windows.Forms.Label lb_dataRecv;
+        private System.Windows.Forms.Button btn_clearBuffer;
     }
 }
 

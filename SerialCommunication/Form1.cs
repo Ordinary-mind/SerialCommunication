@@ -12,9 +12,9 @@ using System.Windows.Forms;
 
 namespace SerialCommunication
 {
-    public partial class Form1 : Form
+    public partial class SerialPortForm : Form
     {
-        public Form1()
+        public SerialPortForm()
         {
             InitializeComponent();
         }
@@ -28,9 +28,9 @@ namespace SerialCommunication
         {
             foreach (String s in System.IO.Ports.SerialPort.GetPortNames())
             {
-                portList.Items.Add(s);
+                txt_portList.Items.Add(s);
             }
-            portList.SelectedIndex = 0;
+            txt_portList.SelectedIndex = 0;
         }
 
         private void receiveData()
@@ -42,7 +42,7 @@ namespace SerialCommunication
                 {
                     if (str != "")
                     {
-                        dataRecv.Text += DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + " Recv=" + str + "\r\n";
+                        txt_dataRecv.Text += DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + " Recv=" + str + "\r\n";
                     }
                 }
                 catch
@@ -67,9 +67,9 @@ namespace SerialCommunication
             try
             {
                 Encoding encoding = Encoding.GetEncoding("GB2312");
-                byte[] bytes = encoding.GetBytes(dataSend.Text);
+                byte[] bytes = encoding.GetBytes(txt_dataSend.Text);
                 serialPort.Write(bytes, 0, bytes.Length);
-                dataRecv.Text += DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + " Send=" + Encoding.Default.GetString(bytes) + "\r\n";
+                txt_dataRecv.Text += DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + " Send=" + Encoding.Default.GetString(bytes) + "\r\n";
             }
             catch
             {
@@ -82,7 +82,7 @@ namespace SerialCommunication
             try
             {
                 serialPort.Encoding = Encoding.GetEncoding("GB18030");
-                serialPort.PortName = portList.Text;
+                serialPort.PortName = txt_portList.Text;
                 serialPort.BaudRate = 9600;
                 serialPort.Parity = Parity.None;
                 serialPort.StopBits = StopBits.One;
@@ -91,14 +91,14 @@ namespace SerialCommunication
                 serialPortFlag = serialPort.IsOpen;
                 if (serialPortFlag)
                 {
-                    MessageBox.Show("串口" + portList.Text + "打开成功！");
+                    MessageBox.Show("串口" + txt_portList.Text + "打开成功！");
                     ThreadStart threadStart = new ThreadStart(receiveData);
                     th = new Thread(threadStart);
                     th.Start();
                 }
                 else
                 {
-                    MessageBox.Show("串口" + portList.Text + "打开失败！");
+                    MessageBox.Show("串口" + txt_portList.Text + "打开失败！");
                 }
                 
             }
@@ -119,6 +119,11 @@ namespace SerialCommunication
             {
                 Environment.Exit(0);
             }
+        }
+
+        private void btn_clearBuffer_Click(object sender, EventArgs e)
+        {
+            txt_dataRecv.Clear();
         }
     }
 }
