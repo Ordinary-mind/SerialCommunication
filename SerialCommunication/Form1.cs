@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -19,7 +20,9 @@ namespace SerialCommunication
         }
 
         SerialPort serialPort = new SerialPort();
-        private long SendCount = 0;
+        Thread th;
+        private String str;
+        private bool serialPortFlag = false;
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -28,6 +31,30 @@ namespace SerialCommunication
                 portList.Items.Add(s);
             }
             portList.SelectedIndex = 0;
+        }
+
+        private void receiveData()
+        {
+            while (serialPort.IsOpen)
+            {
+                str = serialPort.ReadExisting();
+                try
+                {
+                    if (str != "")
+                    {
+                        dataRecv.Text += DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + " Recv=" + str + "\r\n";
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("在读取信息时发生了错误！");
+                }
+                finally
+                {
+                    str = "";
+                    Thread.Sleep(200);
+                }
+            }
         }
 
         private void btn_sendData_Click(object sender, EventArgs e)
@@ -41,9 +68,8 @@ namespace SerialCommunication
             {
                 Encoding encoding = Encoding.GetEncoding("GB2312");
                 byte[] bytes = encoding.GetBytes(dataSend.Text);
-                SendCount += (long)bytes.Length;
                 serialPort.Write(bytes, 0, bytes.Length);
-                dataRecv.Text += "发：" + Encoding.Default.GetString(bytes) + "\r\n";
+                dataRecv.Text += DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + " Send=" + Encoding.Default.GetString(bytes) + "\r\n";
             }
             catch
             {
@@ -62,39 +88,36 @@ namespace SerialCommunication
                 serialPort.StopBits = StopBits.One;
                 serialPort.DataBits = 8;
                 serialPort.Open();
-                MessageBox.Show("串口" + portList.Text + "打开成功！");
+                serialPortFlag = serialPort.IsOpen;
+                if (serialPortFlag)
+                {
+                    MessageBox.Show("串口" + portList.Text + "打开成功！");
+                    ThreadStart threadStart = new ThreadStart(receiveData);
+                    th = new Thread(threadStart);
+                    th.Start();
+                }
+                else
+                {
+                    MessageBox.Show("串口" + portList.Text + "打开失败！");
+                }
+                
             }
             catch
             {
-                MessageBox.Show("串口" + portList.Text + "打开失败！");
+                MessageBox.Show("在打开端口过程中发生错误");
             }
         }
 
-        private void dataRecv_TextChanged(object sender, EventArgs e)
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-
-        }
-
-        private void timer_Tick(object sender, EventArgs e)
-        {
-            if (serialPort.IsOpen)
+            if (th != null)
             {
-                String str = serialPort.ReadExisting();
-                try
-                {
-                    if (str != "")
-                    {
-                        dataRecv.Text += "收：" + str + "\r\n";
-                    }
-                }
-                catch
-                {
-                    MessageBox.Show("在读取信息时发生了错误！");
-                }
-                finally
-                {
-                    str = "";
-                }
+                th.Abort();
+                Environment.Exit(0);
+            }
+            else
+            {
+                Environment.Exit(0);
             }
         }
     }
